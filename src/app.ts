@@ -1,17 +1,24 @@
 
-//import { Request, Response } from 'express';
+
 
 import { envs } from "./config/envs";
+import { AppRoutes } from "./presentation/routes";
 import { Server } from "./presentation/server";
 
-const server = new Server({
-    port: envs.PORT,
-    public_path: envs.PUBLIC_PATH,
-    //host: envs.host,
+(async () => {
+    main();
+})()
+
+function main() {
+
+    const server = new Server({
+        port: envs.PORT,
+        public_path: envs.PUBLIC_PATH,
+        routes: AppRoutes.routes
+        //host: envs.host,
+    })
 
 
-})
+    server.start();
 
-
-server.start();
-
+}
