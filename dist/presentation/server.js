@@ -18,21 +18,29 @@ const path_1 = __importDefault(require("path"));
 class Server {
     constructor(options) {
         this.app = (0, express_1.default)();
-        const { port, public_path = 'public' } = options;
+        const { port, public_path = 'public', routes } = options;
         this.port = port;
         this.publicPath = public_path;
+        this.routes = routes;
     }
     start() {
         return __awaiter(this, void 0, void 0, function* () {
             //* Middleware
+            this.app.use(express_1.default.json());
+            this.app.use(express_1.default.urlencoded({ extended: true }));
             //* Public Folder
             this.app.use(express_1.default.static(this.publicPath));
+            //* Routes
+            this.app.use(this.routes);
+            //* API
+            //* SPA
             this.app.get('*', (req, res) => {
                 const indexPath = path_1.default.join(__dirname + `../../../${this.publicPath}/index.html`);
                 res.sendFile(indexPath);
             });
-            this.app.listen(this.port, '127.0.0.1', () => {
-                console.log(`Listening on 127.0.0.1:${this.port}`);
+            //* Start Server
+            this.app.listen(this.port, () => {
+                console.log(`Server running... Listening on port ${this.port}`);
             });
         });
     }
