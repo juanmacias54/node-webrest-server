@@ -29,6 +29,6 @@ export class UpdateTodoDto {
                 return ['createdAt property must be a valid date'];
         }
 
-        return [undefined, new UpdateTodoDto(id, text, createdAt)]
+        return [undefined, new UpdateTodoDto(id, text, newCreatedAt)]
     }
 }

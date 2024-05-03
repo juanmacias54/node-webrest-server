@@ -43,12 +43,12 @@ export class TodoController {
 
     public updateTodo = async (req: Request, res: Response) => {
         const id = +req.params.id
-        console.log("aca--->1",)
+
         const [error, updateTodoDto] = UpdateTodoDto.create({
             ...req.body,
             id
         })
-        console.log("aca--->2", updateTodoDto)
+
         if (error) return res.status(400).json({ message: error });
 
         const todo = await prisma.todo.findFirst({
@@ -58,7 +58,7 @@ export class TodoController {
 
         if (!todo) return res.status(404).json({ message: `Todo with id ${id} not found` });
 
-        console.log("aca--->3", updateTodoDto!.values)
+
 
         const updateTodo = await prisma.todo.update({
             where: { id },
